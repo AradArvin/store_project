@@ -17,3 +17,13 @@ class Order(models.Model):
     status = models.CharField(choices=Status.choices, default="P")
 
 
+
+class Category(models.Model):
+    name = models.CharField(max_length=150)
+    image = models.ImageField(upload_to='category', null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+
