@@ -24,3 +24,16 @@ class CustomUser(AbstractBaseUser):
 
     def __str__(self) -> str:
         return f"{self.username}"
+    
+
+
+
+class Adress(models.Model):
+    customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    adress = models.CharField(max_length=256)
+    city = models.CharField(max_length=50)
+    postal_code = models.CharField(max_length=100)
+
+
+    def __str__(self) -> str:
+        return self.adress[:15]
