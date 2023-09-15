@@ -27,3 +27,21 @@ class Category(models.Model):
 
 
 
+class Items(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    name = models.CharField(max_length=150)
+    description = models.TextField()
+    image = models.ImageField(upload_to='items', null=True, blank=True)
+    is_available = models.BooleanField()
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self) -> str:
+        return self.name
+
+
+
+
+
