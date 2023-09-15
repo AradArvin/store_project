@@ -1,5 +1,6 @@
 from django.db import models
-
+from accounts.models import CustomUser
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
@@ -41,6 +42,14 @@ class Items(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
+
+
+class OrderItem(models.Model):
+    item_id = models.ForeignKey(Items, on_delete=models.CASCADE)
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
 
 
