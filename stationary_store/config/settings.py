@@ -42,11 +42,14 @@ INSTALLED_APPS = [
 
 LOCAL_APPS = [
     'accounts',
+    'employee',
+    'store',
 ]
     
 
 THIRDPARTY_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
     'debug_toolbar',
 ]
     
@@ -163,6 +166,6 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'accounts.exceptions.custom_exception_handler',
     'NON_FIELD_ERRORS_KEY': 'error',
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'accounts.backends.JWTAuthentication',
+        'accounts.authentication.JWTAuthentication',
     ),
 }
