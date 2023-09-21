@@ -152,6 +152,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom user model
 
 AUTH_USER_MODEL = "accounts.CustomUser"
-AUTHENTICATION_BACKENDS = [
-        'accounts.backends.EmailOrUsernameBackend',
-    ]
+# AUTHENTICATION_BACKENDS = [
+#         'accounts.backends.EmailOrUsernameBackend',
+#     ]
+
+
+# Rest
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'accounts.exceptions.custom_exception_handler',
+    'NON_FIELD_ERRORS_KEY': 'error',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'accounts.backends.JWTAuthentication',
+    ),
+}
