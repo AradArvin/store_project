@@ -62,15 +62,39 @@ class UserLoginSerializer(serializers.ModelSerializer):
         return validated_data
     
 
+
+class UserRUSerializer(serializers.ModelSerializer):
+
+    password = serializers.CharField(max_length=128, min_length=8, write_only=True)
+    id = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'password']
+        fields = ['id', 'email', 'username', 'password']
+        # read_only_fields = ('token',)
 
 
-class AdressSerializer(ModelSerializer):
+    def update(self, instance, validated_data):
+
+        password = validated_data.pop('password', None)
+
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        if password is not None:
+            instance.set_password(password)
+
+        instance.save()
+
+        return instance
+    
+
+
+class AdressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Adress
         fields = ['customer_id', 'adress', 'city', 'postal_code']
+
 
 
 class OtpSerializer(serializers.Serializer):
