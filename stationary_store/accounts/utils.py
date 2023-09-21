@@ -37,3 +37,10 @@ def refresh_token_gen(user_id: int):
     
     return refresh_token
 
+
+
+def gen_jti():
+    """Generate hexed unique id for user"""
+    return str(uuid4().hex)
+
+
