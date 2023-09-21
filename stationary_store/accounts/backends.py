@@ -3,25 +3,25 @@ from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 
 
-class EmailOrUsernameBackend(ModelBackend):
+class EmailOrPhoneNumberBackend(ModelBackend):
     """
     Authentication backend which allows users to authenticate using either their
-    username or email address
+    phone_number or email address
     """
 
-    def authenticate(self, request, username=None, password=None, **kwargs):
+    def authenticate(self, request, phone_number=None, email=None, password=None, **kwargs):
 
         user_model = get_user_model()
 
-        if username is None:
-            username = kwargs.get(user_model.USERNAME_FIELD)
+        if phone_number is None:
+            phone_number = kwargs.get(user_model.USERNAME_FIELD)
 
-        # The `username` field allows to contain `@` characters so
+        # The `phone_number` field allows to contain `@` characters so
         # technically a given email address could be present in either field,
         # possibly even for different users, so we'll query for all matching
         # records and test each one.
         users = user_model._default_manager.filter(
-            Q(**{user_model.USERNAME_FIELD: username}) | Q(email__iexact=username)
+            Q(**{user_model.USERNAME_FIELD: phone_number}) | Q(email__iexact=phone_number)
         )
 
         # Test whether any matched user has the provided password:
