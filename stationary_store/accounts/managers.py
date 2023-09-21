@@ -13,9 +13,9 @@ class UnmatchedException(APIException):
 
 class CustomUserManager(BaseUserManager):
 
-    def create_user(self, username, email, password=None, **kwargs):
+    def create_user(self, phone_number, email, password=None, **kwargs):
         
-        if username is None:
+        if phone_number is None:
             raise TypeError("User must have a username!")
         
         if email is None:
@@ -25,19 +25,19 @@ class CustomUserManager(BaseUserManager):
             raise UnmatchedException("Passwords doesn't match")
         
        
-        user = self.model(username=username, email=email)
+        user = self.model(phone_number=phone_number, email=email)
         user.set_password(password)
         user.save()
         
         return user
     
 
-    def create_superuser(self, username, email, password, **kwargs):
+    def create_superuser(self, phone_number, email, password, **kwargs):
         if password is None:
             raise TypeError("User must have a password!")
         
 
-        user = self.create_user(username=username, email=email, password=password)
+        user = self.create_user(phone_number=phone_number, email=email, password=password)
         user.is_staff = True
         user.is_superuser = True
         user.save()

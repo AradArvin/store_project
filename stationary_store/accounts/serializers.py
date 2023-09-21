@@ -12,7 +12,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'username', 'password', 'confirm_password', 'access_token']
+        fields = ['email', 'phone_number', 'password', 'confirm_password', 'access_token']
 
     def create(self, validated_data):
         
@@ -21,7 +21,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField()
+    phone_number = serializers.EmailField()
     password = serializers.CharField(max_length=128, write_only=True)
     access_token = serializers.CharField(max_length=255, read_only=True)
     refresh_token = serializers.CharField(max_length=255, read_only=True)
@@ -29,16 +29,16 @@ class UserLoginSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         
-        email = attrs.get('email', None)
+        phone_number = attrs.get('phone_number', None)
         password = attrs.get('password', None)
 
-        if email is None:
-            raise serializers.ValidationError("An email adress is required to login")
+        if phone_number is None:
+            raise serializers.ValidationError("A phone number is required to login")
        
         if password is None:
             raise serializers.ValidationError("A password is required to login")
         
-        user = authenticate(username=email, password=password)
+        user = authenticate(username=phone_number, password=password)
         
 
         if user is None:
@@ -54,7 +54,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
 
         validated_data = {
             'email': user.email,
-            'username': user.username,
+            'phone_number': user.phone_number,
             'access_token': access_token,
             'refresh_token': refresh_token
         }
@@ -70,7 +70,7 @@ class UserRUSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'username', 'password']
+        fields = ['id', 'email', 'phone_number', 'password']
         # read_only_fields = ('token',)
 
 

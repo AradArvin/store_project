@@ -6,9 +6,8 @@ from .managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser):
-    username = models.CharField(max_length=100, unique=True)
+    phone_number = models.CharField(max_length=14,validators=phone_validator, unique=True)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(validators=phone_validator)
 
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -17,8 +16,8 @@ class CustomUser(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'email']
+    USERNAME_FIELD = 'phone_number'
+    REQUIRED_FIELDS = ['email']
 
     objects = CustomUserManager()
 
