@@ -4,9 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView
 from .renderers import UserJSONRenderer
 from .serializers import AdressSerializer, SignUpSerializer, UserLoginSerializer, OtpSerializer, UserRUSerializer
+from .models import Adress
 # Create your views here.
 
 
@@ -68,3 +69,15 @@ class UserProfileAPIView(RetrieveUpdateAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
+
+class AdressListView(ListAPIView):
+    queryset = Adress.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserLoginSerializer
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    
