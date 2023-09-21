@@ -6,7 +6,7 @@ from .managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser):
-    phone_number = models.CharField(max_length=14,validators=phone_validator, unique=True)
+    phone_number = models.CharField(max_length=14,validators=[phone_validator,], unique=True)
     email = models.EmailField(unique=True)
 
     created_at = models.DateField(auto_now_add=True)
