@@ -15,7 +15,7 @@ class Order(models.Model):
 
     customer_id = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     order_date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(choices=Status.choices, default="P")
+    status = models.CharField(max_length=1, choices=Status.choices, default="P")
 
 
 
