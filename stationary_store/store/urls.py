@@ -10,6 +10,7 @@ router.register(r'items', ItemsViewSet, basename='item')
 router.register(r'orders', OrderViewSet, basename='order')
 router.register(r'orderitems', OrderItemViewSet, basename='orderitem')
 router.register(r'employee', EmployeeViewSet, basename='employee')
+router.register(r'carts', CartViewSet, basename='cart')
 
 
 urlpatterns = [
