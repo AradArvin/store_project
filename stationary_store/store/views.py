@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from .permissions import IsOwnerOrReadOnly
 from .models import Category, Items, Order, OrderItem
 from .serializers import *
-from .renderers import CartJSONRenderer
 
 # Create your views here.
 
