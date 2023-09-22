@@ -54,3 +54,7 @@ class OrderItem(models.Model):
 
 
 
+class Cart(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    order_items = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
+    is_confirmed = models.BooleanField(default=False)
