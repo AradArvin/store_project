@@ -6,10 +6,17 @@ from django.conf import settings
 from django.core.cache import cache
 from typing import Any
 from rest_framework.exceptions import APIException
-
+import random
 
 _REGEX = r'^(\+989|09)+\d{9}$'
 phone_validator = RegexValidator(regex=_REGEX, message="Invalid Phone Number!")
+
+
+def generated_otp() -> int:
+    otp = random.randint(1000,9999)
+    print(f"Your otp is {otp}")
+    return otp
+
 
 
 class WrongToken(APIException):
