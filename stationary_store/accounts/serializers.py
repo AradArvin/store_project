@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import CustomUser, Adress
 from django.contrib.auth import authenticate
-from .utils import access_token_gen, refresh_token_gen
+from .utils import *
 from .utils import phone_validator
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -44,6 +44,9 @@ class UserLoginSerializer(serializers.Serializer):
         if user is None:
             raise serializers.ValidationError("User not found!")
         
+        if check_cache(user.id):
+            raise serializers.ValidationError("The user is already logged in!") 
+        
 
         if not user.is_active:
             raise serializers.ValidationError("This user has been deavtivated")
@@ -51,6 +54,7 @@ class UserLoginSerializer(serializers.Serializer):
         access_token = access_token_gen(user.pk)
         refresh_token = refresh_token_gen(user.pk)
 
+        cache_setter(refresh_token)
 
         validated_data = {
             'email': user.email,
