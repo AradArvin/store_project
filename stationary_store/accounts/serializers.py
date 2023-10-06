@@ -101,7 +101,7 @@ class AdressSerializer(serializers.ModelSerializer):
 
 
 
-class OtpSerializer(serializers.Serializer):
-    oto_code = serializers.IntegerField()
+class OTPSerializer(serializers.Serializer):
+    otp = serializers.IntegerField()
 
 
