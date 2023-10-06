@@ -94,3 +94,16 @@ class LogOutAPIView(APIView):
         msg = {'status':'logged out!'}
 
         return Response(msg, status=status.HTTP_200_OK)
+    
+
+
+class OTPVerificationView(APIView):
+    def post(self, request):
+        serializer = OTPSerializer(data=request.data)
+        if serializer.is_valid():
+            otp_entered = serializer.validated_data["otp"]
+            if otp_entered == generated_otp():
+                return Response(
+                    {"message": "OTP verified successfully."}, status=status.HTTP_200_OK
+                )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
