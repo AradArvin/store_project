@@ -5,14 +5,13 @@ from employee.views import EmployeeViewSet
 
 
 router = DefaultRouter()
-router.register(r'categories', CategoryViewSet, basename='category')
-router.register(r'items', ItemsViewSet, basename='item')
-router.register(r'orders', OrderViewSet, basename='order')
-router.register(r'orderitems', OrderItemViewSet, basename='orderitem')
 router.register(r'employee', EmployeeViewSet, basename='employee')
-router.register(r'carts', CartViewSet, basename='cart')
+
 
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('api/categories', CategoryAPIView.as_view(), name='categories'),
+    path('api/items', ItemsAPIView.as_view(), name='items'),
+    path('api/cart', ShoppingCartAPIView.as_view(), name='cart'),
 ]
