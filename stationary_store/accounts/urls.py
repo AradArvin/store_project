@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/logout', LogOutAPIView.as_view(), name='logout'),
     path('api/user', UserProfileAPIView.as_view(), name='user'),
     path('api/adress', AdressListView.as_view(), name='adress'),
+    path("verify-otp/", OTPVerificationView.as_view(), name="verify_otp"),
 ]
