@@ -4,6 +4,7 @@ from rest_framework import authentication
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.exceptions import APIException
 from .models import CustomUser
+from .utils import *
 
 
 class TokenException(APIException):
@@ -36,19 +37,32 @@ class JWTAuthentication(authentication.BaseAuthentication):
 
         prefix = auth_header[0].decode("utf-8")
         token = auth_header[1].decode("utf-8")
-
+        
 
         if prefix.lower() != auth_header_prefix:
             return None
+        
 
+        token_type = check_token_type(token)
+
+       
+        if token_type != "access":
+            raise TokenException('Invalid Token!')
+        
+        payload = token_decode(token)
+        user_id = payload["user_id"]
+        if not check_cache(user_id):
+            raise TokenException('User is logged out!')
+        
         return self._authenticate_credentials(request, token)
+
     
 
     def _authenticate_credentials(self, request, token):
         '''
         Check token credentials. and catch exceptions. then return (user, token).
         '''
-
+        
         try:
             payload = jwt.decode(token, settings.SECRET_KEY)
         except:
