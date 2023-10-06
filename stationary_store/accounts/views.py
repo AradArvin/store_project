@@ -6,8 +6,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView
 from .renderers import UserJSONRenderer
-from .serializers import AdressSerializer, SignUpSerializer, UserLoginSerializer, OtpSerializer, UserRUSerializer
+from .serializers import *
 from .models import Adress
+from .utils import *
 # Create your views here.
 
 
@@ -81,3 +82,15 @@ class AdressListView(ListAPIView):
         return Response(serializer.data)
 
     
+
+class LogOutAPIView(APIView):
+    # only if refresh token exists the user will be kept logged in
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+
+        user = request.user
+        token_deleter(user.id)
+        msg = {'status':'logged out!'}
+
+        return Response(msg, status=status.HTTP_200_OK)
